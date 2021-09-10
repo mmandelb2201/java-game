@@ -1,0 +1,18 @@
+package game;
+
+import java.awt.event.KeyEvent;
+
+public class player extends character{
+	final int ID = 2;
+	private int currentX;
+	private int currentY;
+	public player(int x, int y){
+		super(x, y, 2);
+		currentX = x;
+		currentY = y;
+	}
+	public static void step(){
+		
+	}
+
+}

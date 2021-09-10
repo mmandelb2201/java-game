@@ -1,0 +1,42 @@
+package test;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+public class tester {
+	static boolean removeButton = false;
+	public static void main(String[] args) {
+	JFrame frame = new JFrame("test");
+	JButton button = new JButton("press this");
+	button.setBounds(300, 300, 60, 30);
+	frame.setSize(600, 600);
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	frame.setVisible(true);
+	frame.add(button);
+	button.addActionListener(new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("pressed");
+			toggleRemoveButton();
+		}
+		
+	});
+	if(removeButton == true) {
+		frame.remove(button);
+		frame.getContentPane().remove(button);
+		frame.repaint();
+		frame.revalidate();
+		toggleRemoveButton();
+	}
+	}
+	public static void toggleRemoveButton() {
+		if(removeButton == false) {removeButton = true;
+		}
+		if(removeButton == true) {removeButton = false;
+		}
+	}
+}

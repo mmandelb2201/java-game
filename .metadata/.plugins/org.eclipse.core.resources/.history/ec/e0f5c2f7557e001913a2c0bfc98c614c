@@ -1,0 +1,82 @@
+package game;
+
+import java.awt.Component;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class runner extends JPanel{
+	static MyKeyListener list;
+	static player play;
+	static grid gameGrid;
+	static int size = 600;
+	public runner(){
+		MyKeyListener listener = new MyKeyListener(this);
+
+		player one = new player(5, 4);
+		grid Grid = new grid(10, 10, size, one);
+		play = one;
+		gameGrid = Grid;
+		list = listener;
+		this.addKeyListener(listener);
+		setFocusable(true);
+	}
+	public static void main(String[] args){	
+	runner runn = new runner();
+	JFrame frame = new JFrame("game");
+	int frameSize = size*(size/2);
+	frame.setSize(frameSize, frameSize);
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	frame.setVisible(true);
+	frame.add(runn);
+	frame.addKeyListener(list);
+	boolean isRunning = true;
+	while(isRunning){
+	drawingComponent DC = gameGrid.update();
+	if(list.getDir() == 1) {System.out.println("Player X: "+play.getX()+" Player Y: "+play.getY());
+	gameGrid.moveUp(play, play.getX(), play.getY());
+	System.out.println("Player X2: "+play.getX()+" Player Y2: "+play.getY());
+	list.setDir(0);
+	}
+
+	frame.add(DC);
+	frame.revalidate();
+	frame.repaint();
+	}
+	}
+
+	public player getPlayer() {return play;}
+
+}
+
+class MyKeyListener implements KeyListener {
+	player play;
+	runner runn;
+	public int dir;
+	public MyKeyListener(runner x){
+		runn = x;
+		dir = 0;
+	}
+	public void keyPressed(KeyEvent e){
+		int key = e.getKeyCode();
+		if(key == KeyEvent.VK_W){
+			System.out.println("W was pressed");
+			dir = 1;
+
+		}
+	}
+@Override
+	public void keyReleased(KeyEvent e) {
+		//not going to be used
+	}
+@Override
+	public void keyTyped(KeyEvent e) {
+		//not going to be used
+	}
+	public int getDir() {return dir;}
+	public void setDir(int x) {dir = x;}
+}

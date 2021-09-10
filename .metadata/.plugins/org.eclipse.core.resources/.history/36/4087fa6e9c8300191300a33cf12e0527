@@ -1,0 +1,19 @@
+package game;
+
+import java.util.ArrayList;
+
+public class mapHolder {
+	ArrayList<map> maps;
+	public mapHolder(){
+		maps = new ArrayList<map>();
+	}
+	public void addMap(map x) {
+		maps.add(x);
+	}
+	public map getMap(int x) {
+		return maps.get(x);
+	}
+	public int numberOfMaps() {
+		return maps.size();
+	}
+}

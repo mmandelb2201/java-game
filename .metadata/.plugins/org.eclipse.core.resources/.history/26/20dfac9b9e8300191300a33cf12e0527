@@ -1,0 +1,25 @@
+package game;
+
+import java.awt.event.KeyEvent;
+
+public class player extends character{
+	final int ID = 2;
+	int dir = 0;
+	private int currentX;
+	private int currentY;
+	int score = 0;
+	boolean hasMoved = false;
+	public player(int x, int y){
+		super(x, y, 2);
+		currentX = x;
+		currentY = y;
+	}
+		
+
+	public boolean checkHasMoved() {return hasMoved;}
+	public void setHasMoved() {hasMoved = true;}
+	public void setDir(int x) {dir = x;}
+	public int getDir() {return dir;}
+	public void addOne() {score++;}
+	public int getScore() {return score;}
+}

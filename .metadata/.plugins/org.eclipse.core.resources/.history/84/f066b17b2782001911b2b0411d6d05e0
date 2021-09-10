@@ -1,0 +1,166 @@
+package game;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class runner extends JPanel{
+	static MyKeyListener list;
+	static player play;
+	static grid gameGrid;
+	static mapHolder maps;
+	public static int size = 600;
+	static int gridSize = 10;
+	static boolean isRunning = true;
+	static boolean isPaused = false;
+	static drawingComponent DC;
+	static boolean firstTime;
+	public runner(){
+		MyKeyListener listener = new MyKeyListener(this);
+		maps = new mapHolder();
+		createMaps();
+		player one = new player(1, 1);
+		grid Grid = new grid(gridSize, gridSize, size, one, maps);
+		play = one;
+		gameGrid = Grid;
+		list = listener;
+		firstTime = true;
+		this.addKeyListener(listener);
+		setFocusable(true);
+	}
+	public static void main(String[] args){	
+	wall[] s = maps.getMap(0).getWalls();
+	wall temp = s[0];
+	System.out.println(temp.toString());
+	runner runn = new runner();
+	JFrame frame = new JFrame("game");
+	int frameSized = (int) (size*1.1);
+	frame.setSize(frameSized, frameSized);
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	frame.setVisible(true);
+	frame.add(runn);
+	frame.addKeyListener(list);
+	frame.setBackground(Color.gray);
+	while(isRunning){
+		if(isPaused == false) {
+	if(list.getDir() == 1) {
+	gameGrid.moveUp(play, play.getX(), play.getY());
+	list.setDir(0);
+	}
+	else if(list.getDir() == 2) {
+	gameGrid.moveDown(play, play.getX(), play.getY());
+	list.setDir(0);
+	}
+	else if(list.getDir() == 3) {
+	gameGrid.moveLeft(play, play.getX(), play.getY());
+	list.setDir(0);
+	}
+	else if(list.getDir() == 4) {
+	gameGrid.moveRight(play, play.getX(), play.getY());
+	list.setDir(0);
+	}
+	else {doNothing();}
+	}
+	if(list.getDir() == 5) {
+		togglePause();
+		DC.togglePause();
+		list.setDir(0);
+	}
+	//if(firstTime == true) {firstTime  = false;}
+	//else{frame.remove(DC);}
+	DC = gameGrid.update();
+	frame.add(DC);
+	frame.repaint();
+	}
+	}
+	public static void togglePause() {
+		if(isPaused == false) {isPaused = true;}
+		else {isPaused = false;}
+	}
+	public player getPlayer() {return play;}
+	public static void doNothing() {return;}
+	public void paintComponent(Graphics g){
+	
+	}
+	
+	public static void createMaps() {
+		wall[] first = new wall[23];
+		first[0] = new wall(0, 7);
+		first[1] = new wall(0, 8);
+		first[2] = new wall(0, 9);
+		first[3] = new wall(0, 6);
+		first[4] = new wall(1, 9);
+		first[5] = new wall(2, 9);
+		first[6] = new wall(6, 9);
+		first[7] = new wall(7, 9);
+		first[8] = new wall(8, 9);
+		first[9] = new wall(9, 9);
+		first[10] = new wall(6, 8);
+		first[11] = new wall(9, 8);
+		first[12] = new wall(9, 7);
+		first[13] = new wall(9, 6);
+		first[14] = new wall(9, 5);
+		first[15] = new wall(4, 6);
+		first[16] = new wall(4, 5);
+		first[17] = new wall(4, 4);
+		first[18] = new wall(4, 3);
+		first[19] = new wall(5, 3);
+		first[20] = new wall(6, 3);
+		first[21] = new wall(7, 3);
+		first[22] = new wall(8, 3);
+		map easyMap = new map(first);
+		maps.addMap(easyMap);
+		System.out.println("Number Of Maps: "+maps.numberOfMaps());
+		
+	}
+}
+
+class MyKeyListener implements KeyListener {
+	player play;
+	runner runn;
+	public int dir;
+	public MyKeyListener(runner x){
+		runn = x;
+		dir = 0;
+	}
+	public void keyPressed(KeyEvent e){
+		int key = e.getKeyCode();
+		if(key == KeyEvent.VK_W){
+			//System.out.println("W was pressed");
+			dir = 1;
+		}
+		if(key == KeyEvent.VK_P) {
+			dir = 5;
+		}
+		if(key == KeyEvent.VK_A) {
+			//System.out.println("A was pressed");
+			dir = 3;
+		}
+		if(key == KeyEvent.VK_S) {
+			//System.out.println("S was pressed");
+			dir = 2;
+		}
+		if(key == KeyEvent.VK_D) {
+			//System.out.println("D was pressed");
+			dir = 4;
+		}
+	}
+@Override
+	public void keyReleased(KeyEvent e) {
+		//not going to be used
+	}
+@Override
+	public void keyTyped(KeyEvent e) {
+		//not going to be used
+	}
+	public int getDir() {return dir;}
+	public void setDir(int x) {dir = x;}
+}

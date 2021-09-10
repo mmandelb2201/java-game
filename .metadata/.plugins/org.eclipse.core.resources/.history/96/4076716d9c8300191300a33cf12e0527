@@ -1,0 +1,13 @@
+package game;
+
+public class map {
+	wall[] walls;
+	public map(wall[] x) {
+		walls = new wall[x.length];
+	}
+	public wall[] getWalls() {return walls;}
+	public int numberOfWalls() {return walls.length;}
+	public wall getWall(int x) {
+		return walls[x];
+	}
+}

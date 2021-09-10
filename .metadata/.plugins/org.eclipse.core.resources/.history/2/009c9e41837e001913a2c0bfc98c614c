@@ -1,0 +1,43 @@
+package game;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+
+import javax.swing.JComponent;
+
+public class drawingComponent extends JComponent{
+	private character[][] grid;
+	private int max;
+	private int size;
+	private int gridPixleSize;
+	public drawingComponent(character[][] x,int maxt, int gridSize){
+		grid = new character[maxt][maxt];
+		grid = x;
+		max = maxt;
+		size = maxt;
+		gridPixleSize = gridSize;
+		for(int i = 0;i<max;i++){
+			for(int k = 0;k<max;k++){
+				grid[i][k] = x[i][k];
+			}
+		}
+	}
+	public void paintComponent(Graphics g){
+		Graphics2D g2 = (Graphics2D) g;
+		int constant = gridPixleSize/max;
+		for(int i = 0;i<grid.length;i++){
+			for(int k = 0;k<grid.length;k++){
+				if(grid[i][k].getId() == 2){
+					g2.setColor(Color.BLUE);
+					g2.fillRect(i*constant, k*constant, constant, constant);
+				}
+				if(grid[i][k].getId() == 0){
+				g2.setColor(Color.BLACK);
+				g2.fillRect(i*constant, k*constant, constant, constant);
+			}
+			}
+		}
+	}
+}

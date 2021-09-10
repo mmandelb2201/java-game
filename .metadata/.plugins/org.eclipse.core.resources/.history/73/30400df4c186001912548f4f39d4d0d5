@@ -1,0 +1,44 @@
+package game;
+
+import java.awt.event.KeyEvent;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+
+public class player extends character{
+	final int ID = 2;
+	int dir = 0;
+	private int currentX;
+	private int currentY;
+	int score = 0;
+	int health;
+	boolean hasMoved = false;
+	boolean isInvincible = false;
+	public player(int x, int y){
+		super(x, y, 2);
+		currentX = x;
+		currentY = y;
+		health = 3;
+	}
+	public void doDamage() {if(isInvincible == false) {health--;
+		long startTime = System.currentTimeMillis();
+		isInvincible = true;
+		boolean hasChanged = false;
+		while(hasChanged == false) {
+			long currentTime = System.currentTimeMillis();
+			long difference = currentTime - startTime;
+			System.out.println(difference);
+			if(difference > 2000) {
+				isInvincible = false;
+				hasChanged = true;
+			}
+		}
+		}
+	}
+	public int getHeatlh() {return health;}
+	public boolean checkHasMoved() {return hasMoved;}
+	public void setHasMoved() {hasMoved = true;}
+	public void setDir(int x) {dir = x;}
+	public int getDir() {return dir;}
+	public void addOne() {score++;}
+	public int getScore() {return score;}
+}

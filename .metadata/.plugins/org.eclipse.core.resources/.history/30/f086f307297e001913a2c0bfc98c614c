@@ -1,0 +1,72 @@
+package game;
+
+import java.awt.Component;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class runner extends JPanel{
+	static KeyListener list;
+	public player one;
+	public runner(){
+		
+		KeyListener listener = new MyKeyListener(this);
+		list = listener;
+		this.addKeyListener(listener);
+		setFocusable(true);
+	}
+	public static void main(String[] args){	
+	int size = 600;
+	runner runn = new runner();
+	player one = new player(4, 4);
+	grid Grid = new grid(10, 10, size, one);
+	JFrame frame = new JFrame("game");
+	frame.setSize(size, size);
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	frame.setVisible(true);
+	frame.add(runn);
+	frame.addKeyListener(list);
+	boolean isRunning = true;
+	while(isRunning){
+	if(one.getDir() == 1) {System.out.println("works");}
+	drawingComponent DC = step();
+	frame.add(DC);
+	}
+	}
+	public void moveUp(){
+		grid.moveUp(one, one.getX(), one.getY());
+	}
+
+	public static drawingComponent step(){
+		drawingComponent DC = grid.update();
+		return DC;
+	}
+
+}
+
+class MyKeyListener implements KeyListener{
+	player play;
+	public MyKeyListener(player one){
+		play = one;
+	}
+	public void keyPressed(KeyEvent e){
+		int key = e.getKeyCode();
+		if(key == KeyEvent.VK_W){
+			System.out.println("W was pressed");
+			play.setDir(1);
+			//grid.moveUp(self, x, y);
+		}
+	}
+@Override
+	public void keyReleased(KeyEvent e) {
+		//not going to be used
+	}
+@Override
+	public void keyTyped(KeyEvent e) {
+		//not going to be used
+	}
+}
